@@ -7,6 +7,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
+const commands = require('./commands');
+
 const KEY = process.env.IFTT_MAKER_KEY;
 
 const app = express();
@@ -15,21 +17,18 @@ const server = http.createServer(app);
 app.use(bodyParser.text());
 app.use(bodyParser.json());
 
-const commands = [
-    /(heater)\s+(lamp|window)\s+(on|off)/i,
-];
-
 app.post('/google', (req, res) => {
     const text = req.body;
     console.log('>>', text);
-    for (let reg of commands) {
+    for (let [reg, mappingList] of commands) {
         const match = text.match(reg);
         if (!match) continue;
 
-        const hook = match.slice(1).join('-');
-        console.log('   - execute'.cyan, hook)
-        sendHook(hook)
-        .then(result => res.json({success: true, hook, result: result.data}))
+        const hooks = mappingList.map(fn => fn(match.slice(1))).map(arr => arr.join('-'));
+
+        console.log('   - execute'.cyan, hooks.map(str => str.bold).join(', '));
+        return Promise.all(hooks.map(sendHook))
+        .then(response => res.json({success: true, hooks}))
         .catch(ex => {
             res.json({success: false, error: ex});
             console.log('[ERROR]'.red, ex.stack || ex)
