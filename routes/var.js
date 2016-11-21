@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
+const logger = require('../utils/logger');
+
 const STORAGE_FILE = path.join(__dirname, '..', 'variables.json');
 
 module.exports = () => {
@@ -12,13 +14,15 @@ module.exports = () => {
         if (!req.body || !('value' in req.body)) {
             return res.sendError('Expected signature: {value: ...}');
         }
+        logger.log('[VAR]'.yellow, req.params.name.cyan, req.body.value);
         setVar(req.params.name, req.body.value);
         res.json({success: true});
     });
 
     app.get('/get/:name', (req, res) => {
+        const {name} = req.params;
         res.json({
-            [req.params.name]: getVar(req.params.name),
+            [name]: getVar(name),
         });
     })
 

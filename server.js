@@ -21,7 +21,7 @@ app.use((req, res, next) => {
         res.json({error})
     };
     next();
-})
+});
 
 app.use('/text', textRoutes());
 app.use('/var', varRoutes());
