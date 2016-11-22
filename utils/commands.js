@@ -23,6 +23,6 @@ module.exports = [
     command(/(heater)s?.+(lamp|window).+(on|off)/i),
     command(/(lamp|window)s?.+(heater)s?.+(on|off)/i, reorder([1, 0, 2])),
 
-    command(/heaters? off/i, [fixed('heater lamp off'), fixed('heater window off')]),
-    command(/heaters? on/i, [fixed('heater lamp on'), fixed('heater window on')]),
+    command(/heaters?.+\boff/i, [fixed('heater lamp off'), fixed('heater window off')]),
+    command(/heaters?.+\bon/i, [fixed('heater lamp on'), fixed('heater window on')]),
 ];
