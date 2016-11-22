@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 
 const textRoutes = require('./routes/text');
 const varRoutes = require('./routes/var');
+const logRoutes = require('./routes/log');
+const logger = require('./utils/logger');
 
 const app = express();
 const server = http.createServer(app);
@@ -25,8 +27,9 @@ app.use((req, res, next) => {
 
 app.use('/text', textRoutes());
 app.use('/var', varRoutes());
+app.use('/log', logRoutes());
 
 server.listen(process.env.PORT || 1271, error => {
     if (error) throw error;
-    console.log('Listening on:', server.address().port);
+    logger.info('Listening on: %s'.bold, server.address().port.toString().green);
 });
