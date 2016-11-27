@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const textRoutes = require('./routes/text');
 const varRoutes = require('./routes/var');
 const logRoutes = require('./routes/log');
+const piRoutes = require('./routes/pi');
 const logger = require('./utils/logger');
 
 const app = express();
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 app.use('/text', textRoutes());
 app.use('/var', varRoutes());
 app.use('/log', logRoutes());
+app.use('/pi', piRoutes());
 
 server.listen(process.env.PORT || 1271, error => {
     if (error) throw error;
