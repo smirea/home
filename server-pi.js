@@ -3,11 +3,10 @@ require('colors');
 
 const http = require('http');
 const path = require('path');
+const {exec} = require('child_process');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const DreamScreen = require('dreamscreen');
 
 process.env.LOG_FILE = path.join(__dirname, 'log-pi.log');
 const logger = require('./utils/logger');
@@ -18,22 +17,21 @@ const server = http.createServer(app);
 let ds = null;
 
 const init = () => {
-    app.use(bodyParser.text());
-    app.use(bodyParser.json());
-
     app.use((req, res, next) => {
         res.sendError = (error, status=400) => {
-            res.setStatus(status);
-            res.json({error})
+            res.status(status);
+            res.json({error: error && error.message || error});
         };
         next();
     });
 
     app.post('/DreamScreen/:method/:value', (req, res) => {
-        console.log('here', req.params)
-        ds[req.params.method](req.params.value)
-        .then(result => res.json({success: true, result}))
-        .catch(res.sendError);
+        const {method, value} = req.params;
+        exec(`node ds-manager "${method}" "${value}"`, {stdio: [0,1,2]}, (error, stdout, stderr) => {
+            if (error) return res.sendError(error);
+            console.log(stdout);
+            res.json({success: true});
+        });
     });
 
     app.use((err, req, res, next) => res.sendError(err));
@@ -44,19 +42,9 @@ const init = () => {
     });
 }
 
-const initDreamScreen = () =>
-    DreamScreen.getInstance({debug: true, discoverByName: true})
-    .then(instance => {
-        ds = instance;
-        logger.info('[DreamScreen] connected');
-        ds.on('disconnect', () => logger.warn('[DreamScreen] disconnected'));
-    });
-
-Promise.all([
-    initDreamScreen(),
-])
+Promise.resolve()
 .then(init)
 .catch(ex => {
-    logger.error(ex.stack || ex);
+    console.error(ex.stack || ex);
     process.exit(1);
 })
