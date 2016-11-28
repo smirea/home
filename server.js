@@ -10,6 +10,7 @@ const textRoutes = require('./routes/text');
 const varRoutes = require('./routes/var');
 const logRoutes = require('./routes/log');
 const piRoutes = require('./routes/pi');
+const cmdRoutes = require('./routes/cmd');
 const logger = require('./utils/logger');
 
 const app = express();
@@ -20,7 +21,7 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.sendError = (error, status=400) => {
-        res.setStatus(status);
+        res.status(status);
         res.json({error})
     };
     next();
@@ -30,6 +31,7 @@ app.use('/text', textRoutes());
 app.use('/var', varRoutes());
 app.use('/log', logRoutes());
 app.use('/pi', piRoutes());
+app.use('/cmd', cmdRoutes())
 
 server.listen(process.env.PORT || 1271, error => {
     if (error) throw error;
