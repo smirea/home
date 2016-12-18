@@ -1,6 +1,10 @@
 
 require('colors');
-require('dotenv').config();
+
+// On heroku, use its proprietary env config
+if (!process.env.IS_HEROKU) {
+    require('dotenv').config();
+}
 
 const http = require('http');
 
