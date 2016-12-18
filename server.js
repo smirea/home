@@ -1,5 +1,6 @@
 
 require('colors');
+require('dotenv').config();
 
 const http = require('http');
 

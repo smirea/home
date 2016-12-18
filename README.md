@@ -3,7 +3,8 @@
 ## Setup:
 
 ```bash
-export IFTT_MAKER_KEY='<IFTT_KEY_GOES_HERE>'
+cp .env.example .env
+# Now edit .env and add your keys
 ```
 
 ## Run
