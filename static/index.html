@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        html {
+            font-family: tahoma, arial;
+            font-size: 14px;
+        }
+
+        #lights {
+            display: flex;
+        }
+
+        .light {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .light-icon {
+            flex: 0 0 auto;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            background: #ccc;
+            width: 50px;
+            height: 50px;
+        }
+        .not-connected .light-icon {
+            border-color: red;
+            background: #f99;
+        }
+        .power-off .light-icon {
+            background-color: #666;
+        }
+        .power-on .light-icon {
+            background-color: #aaf;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="lights"></div>
+    </div>
+
+    <script type="text/javascript" src="/axios.js"></script>
+    <script type="text/javascript">
+        const init = () => {
+            axios.get('/light/list').then(list =>
+                list.data.forEach(light => $('#lights').innerHTML += Templates.light(light))
+            )
+        };
+
+        const $ = sel => document.querySelector(sel);
+
+        const toggleLight = (id, power) =>
+            axios.post() // TODO
+
+        const Templates = {
+            light: ({id, label, group, connected, power}) => `
+                <div
+                    class="light ${connected ? '' : 'not-connected'} power-${power}"
+                    onclick="toggleLight('${id}', ${!(power === 'on')})"
+                >
+                    <div class="light-icon"></div>
+                    <div class="light-name">${label}</div>
+                </div>
+            `,
+        };
+
+        init();
+    </script>
+</body>
+</html>

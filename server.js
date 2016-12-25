@@ -40,6 +40,12 @@ app.use('/pi', piRoutes());
 app.use('/cmd', cmdRoutes());
 app.use('/light', lightRoutes())
 
+const static = {
+    'axios.js': 'node_modules/axios/dist/axios.js',
+};
+for (let key in static) { app.use('/' + key, express.static(static[key])) }
+app.use('/', express.static('static'));
+
 server.listen(process.env.PORT || 1271, error => {
     if (error) throw error;
     logger.info('Listening on: %s'.bold, server.address().port.toString().green);
