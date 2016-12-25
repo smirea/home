@@ -10,7 +10,7 @@
             font-size: 14px;
         }
 
-        #lights {
+        .lights {
             display: flex;
         }
 
@@ -40,37 +40,32 @@
         .power-on .light-icon {
             background-color: #aaf;
         }
+
+        .error {
+            border: 1px solid crimson;
+            background: red;
+            color: white;
+            padding: 10px;
+            font-family: courier;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
-    <div id="main">
-        <div id="lights"></div>
-    </div>
+    <div id="app"></div>
 
     <script type="text/javascript" src="/axios.js"></script>
+
+    <script type="text/javascript" src="/react.js"></script>
+    <script type="text/javascript" src="/react-dom.js"></script>
+    <script type="text/javascript" src="/App.js"></script>
+
     <script type="text/javascript">
         const init = () => {
-            axios.get('/light/list').then(list =>
-                list.data.forEach(light => $('#lights').innerHTML += Templates.light(light))
-            )
+            ReactDOM.render(React.createElement(App, null), $('#app'));
         };
 
         const $ = sel => document.querySelector(sel);
-
-        const toggleLight = (id, power) =>
-            axios.post() // TODO
-
-        const Templates = {
-            light: ({id, label, group, connected, power}) => `
-                <div
-                    class="light ${connected ? '' : 'not-connected'} power-${power}"
-                    onclick="toggleLight('${id}', ${!(power === 'on')})"
-                >
-                    <div class="light-icon"></div>
-                    <div class="light-name">${label}</div>
-                </div>
-            `,
-        };
 
         init();
     </script>

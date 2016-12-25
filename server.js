@@ -17,6 +17,7 @@ const logRoutes = require('./routes/log');
 const piRoutes = require('./routes/pi');
 const cmdRoutes = require('./routes/cmd');
 const lightRoutes = require('./routes/light');
+const staticRoutes = require('./routes/static');
 const logger = require('./utils/logger');
 
 const app = express();
@@ -40,11 +41,7 @@ app.use('/pi', piRoutes());
 app.use('/cmd', cmdRoutes());
 app.use('/light', lightRoutes())
 
-const static = {
-    'axios.js': 'node_modules/axios/dist/axios.js',
-};
-for (let key in static) { app.use('/' + key, express.static(static[key])) }
-app.use('/', express.static('static'));
+app.use(staticRoutes());
 
 server.listen(process.env.PORT || 1271, error => {
     if (error) throw error;
