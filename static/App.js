@@ -11,6 +11,17 @@ class App extends PureComponent {
 
     componentWillMount () {
         this.fetchLights();
+        setInterval(() => this.fetchLights(), 60 * 1000);
+
+        // this.setState({
+        //     lights: [
+        //         {id: '1', power: 'on', connected: true, label: 'Test On'},
+        //         {id: '2', power: 'off', connected: true, label: 'Test Off'},
+        //         {id: '3', power: 'on', connected: true, label: 'Test On'},
+        //         {id: '4', power: 'off', connected: true, label: 'Test Off'},
+        //         {id: '5', power: 'off', connected: false, label: 'Test Not Connected'},
+        //     ],
+        // })
     }
 
     fetchLights () {
@@ -56,11 +67,10 @@ class App extends PureComponent {
         return (
         <div {...rest} style={style}>
             {!error ? null : <div className='error'>{error}</div>}
-            {loading ? 'Loading...' :
-                <div className='lights'>
-                    {lights.map(obj => <Light key={obj.id} data={obj} toggle={this.handleLightToggle} />)}
-                </div>
-            }
+            {!loading ? null : <div>'Loading...'</div>}
+            <div className='lights'>
+                {lights.map(obj => <Light key={obj.id} data={obj} toggle={this.handleLightToggle} />)}
+            </div>
         </div>
         );
     }
@@ -91,7 +101,7 @@ class Light extends PureComponent {
         return (
         <div
             {...rest}
-            className={`light ${connected ? '' : 'not-connected'} power-${power}`}
+            className={`light ${connected ? `power-${power}` : 'not-connected'}`}
             onClick={this.handleToggle}
         >
             <div className="light-icon"></div>

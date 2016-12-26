@@ -1,0 +1,65 @@
+
+.lights {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
+    cursor: pointer;
+}
+.light, .light * {
+    transition: all .3s ease-in;
+}
+
+.light-name {
+    padding: 10px;
+    color: white;
+    font-size: 1.2rem;
+    line-height: 1.1;
+}
+.light-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 5px solid #ccc;
+    /*background: #ccc;*/
+    width: 100px;
+    height: 100px;
+    font-size: 70px;
+    box-shadow: 0px 0px 0px #fff;
+}
+.light-icon::before {
+    position: relative;
+    top: 5px;
+    content: '💡';
+}
+.not-connected .light-name {
+    color: red;
+}
+.not-connected .light-icon {
+    border-color: red;
+    background: #f99;
+}
+.not-connected .light-icon::before {
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+.power-off .light-icon {
+    border-color: #666;
+}
+
+.power-off .light-icon::before {
+    filter: grayscale(100%);
+}
+.power-on .light-icon {
+    border-color: #ccc;
+    box-shadow: 0px 0px 30px #fff;
+}

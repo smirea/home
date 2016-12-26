@@ -2,43 +2,15 @@
 <html>
 <head>
     <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <style>
         * { box-sizing: border-box; }
 
         html {
             font-family: tahoma, arial;
             font-size: 14px;
-        }
-
-        .lights {
-            display: flex;
-        }
-
-        .light {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            margin: 10px;
-            cursor: pointer;
-        }
-        .light-icon {
-            flex: 0 0 auto;
-            border-radius: 50%;
-            border: 3px solid #ccc;
-            background: #ccc;
-            width: 50px;
-            height: 50px;
-        }
-        .not-connected .light-icon {
-            border-color: red;
-            background: #f99;
-        }
-        .power-off .light-icon {
-            background-color: #666;
-        }
-        .power-on .light-icon {
-            background-color: #aaf;
+            background: #333;
+            color: white;
         }
 
         .error {
@@ -50,6 +22,7 @@
             white-space: pre-wrap;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="/lights.css">
 </head>
 <body>
     <div id="app"></div>
