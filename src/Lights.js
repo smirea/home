@@ -64,9 +64,8 @@ export default class Lights extends PureComponent {
     }
 
     handleLightToggle = (id, power) => {
-        axios.post('/light/' + power + '/id:' + id)
-        .then(res => this.updateLights([{id, power}]))
-        .catch(this.props.onError);
+        this.updateLights([{id, power}]);
+        axios.post('/light/' + power + '/id:' + id).catch(this.props.onError);
     };
 
     handleSceneToggle = (id, power) => {
@@ -77,12 +76,8 @@ export default class Lights extends PureComponent {
             axios.post('/light/scene/on/' + id) :
             axios.post('/light/states', nextLightsState.map(obj => ({selector: 'id:' + obj.id, power: obj.power})));
 
-        promise
-            .then(res => {
-                const {lights} = this.state;
-                this.updateLights(nextLightsState);
-            })
-            .catch(this.props.onError);
+        this.updateLights(nextLightsState);
+        promise.catch(this.props.onError);
     };
 
     render () {
@@ -148,7 +143,7 @@ class Scene extends PureComponent {
         return (
         <div className='scene'>
             <Light
-                iconStyle={{background: `hsl(${hue}, ${saturation * 100 + '%'}, ${brightness * 100 + '%'})`}}
+                iconWrapperStyle={{background: `hsl(${hue}, ${saturation * 100 + '%'}, ${brightness * 100 + '%'})`}}
                 toggle={this.handleToggle}
                 data={{
                     id: uuid,
@@ -167,7 +162,7 @@ class Light extends PureComponent {
     static propTypes = {
         toggle: PropTypes.func.isRequired,
         data: ExtraPropTypes.light().isRequired,
-        iconStyle: PropTypes.object,
+        iconWrapperStyle: PropTypes.object,
     };
 
     handleToggle = () => {
@@ -176,10 +171,10 @@ class Light extends PureComponent {
     }
 
     render () {
-        const {data: {id, power, connected, label}, toggle, iconStyle, ...rest} = this.props;
+        const {data: {id, power, connected, label}, toggle, iconWrapperStyle, ...rest} = this.props;
 
         const renderIcon = (cls, style) =>
-            <Icon size='5x' name='lightbulb-o' className={`light-icon ${cls || ''}`} style={style} />
+            <Icon size='5x' name='lightbulb-o' className={cls} style={style} />
 
         return (
         <div
@@ -187,8 +182,8 @@ class Light extends PureComponent {
             className={`light ${connected ? `power-${power}` : 'not-connected'}`}
             onClick={this.handleToggle}
         >
-            <div style={{position: 'relative'}}>
-                {renderIcon(null, iconStyle)}
+            <div className='light-icon-wrapper' style={iconWrapperStyle}>
+                {renderIcon('light-icon')}
             </div>
             <div className='light-name'>{label}</div>
         </div>

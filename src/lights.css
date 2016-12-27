@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-.light, .light * {
+.light-icon-wrapper, .light-icon-wrapper i {
     transition: all .3s ease-in;
 }
 
@@ -19,7 +19,8 @@
     line-height: 1.1;
 }
 
-.light-icon {
+.light-icon-wrapper {
+    position: relative;
     flex: 0 0 auto;
     display: flex;
     align-items: center;
@@ -29,15 +30,23 @@
     /*background: #ccc;*/
     width: 100px;
     height: 100px;
-    font-size: 70px;
     box-shadow: 0px 0px 0px #fff;
+    overflow: hidden;
+}
+
+.light-icon {
+    text-shadow: 0px 0px 0px #fff;
+}
+
+.light-icon-background-large {
+    transform: scale(1.1);
 }
 
 .not-connected {
     color: red;
 }
 
-.not-connected .light-icon {
+.not-connected .light-icon-wrapper {
     border-color: red;
     background: #f99;
 }
@@ -46,7 +55,7 @@
     color: #666;
 }
 
-.power-off .light-icon {
+.power-off .light-icon-wrapper {
     border-color: #666;
 }
 
@@ -54,7 +63,11 @@
     color: white;
 }
 
-.power-on .light-icon {
+.power-on .light-icon-wrapper {
     border-color: #ccc;
     box-shadow: 0px 0px 30px #fff;
+}
+
+.power-on .light-icon {
+    text-shadow: 0px 0px 30px #fff, 0px 0px 2px #000;
 }

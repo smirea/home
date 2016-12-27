@@ -8,6 +8,17 @@ export default class App extends PureComponent {
         error: null,
     };
 
+    componentWillMount () {
+        // Periodically refresh
+        let timeout = null;
+        document.body.addEventListener('mousedown', () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                window.location.reload();
+            }, 3600 * 1000);
+        })
+    }
+
     errorHandler = error => {
         console.warn(error)
         const msg = !error ?
