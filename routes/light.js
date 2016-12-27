@@ -15,7 +15,9 @@ const promiseHandler = fn => (req, res) =>
     .then(result => res.json(result))
     .catch(error => {
         res.status(400);
-        res.json({error: error});
+        const msg = error.stack || error.message || error;
+        console.error('[ERROR]', msg);
+        res.json({error: '' + msg});
     });
 
 module.exports = () => {
@@ -35,8 +37,12 @@ module.exports = () => {
     });
 
     app.post('/on/:selector?', stateHandler({power: 'on'}));
-
     app.post('/off/:selector?', stateHandler({power: 'off'}));
+    app.post('/states', promiseHandler((req) => livingRoom.states(req.body)));
+
+    app.get('/scene/list', promiseHandler(() => livingRoom.listScenes()));
+    app.post('/scene/off/:id', promiseHandler(req => livingRoom.sceneState(req.params.id, {power: 'off'})));
+    app.post('/scene/on/:id', promiseHandler(req => livingRoom.sceneState(req.params.id, {power: 'on'})));
 
     return app;
 };
