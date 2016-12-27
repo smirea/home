@@ -1,9 +1,4 @@
 
-.lights {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .light {
     display: flex;
     align-items: center;
