@@ -4,9 +4,11 @@
   "description": "My home automation server",
   "main": "server.js",
   "scripts": {
-    "start": "webpack-dev-server -p",
+    "start": "node server.js",
     "start-pi": "node server-pi.js",
-    "start-dev": "webpack-dev-server"
+    "start-dev": "webpack-dev-server",
+    "build": "webpack -p",
+    "postinstall": "if [ IS_HEROKU ]; then npm run build; fi"
   },
   "engines": {
     "node": "6.4.x"

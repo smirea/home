@@ -2,6 +2,8 @@
 import axios from 'axios';
 import React, {PureComponent, PropTypes} from 'react';
 
+import './lights.css';
+
 const ExtraPropTypes = {
     light: () =>
         PropTypes.shape({

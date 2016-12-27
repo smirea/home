@@ -7,6 +7,7 @@ if (!process.env.IS_HEROKU) {
 }
 
 const http = require('http');
+const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -46,6 +47,10 @@ if (!module.parent) {
     const server = http.createServer(app);
 
     init(app);
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'src' ,'index.html'));
+    })
+    app.use('/', express.static('build'));
 
     server.listen(process.env.PORT || 1271, error => {
         if (error) throw error;
