@@ -1,6 +1,10 @@
 
 import React, {PureComponent, PropTypes} from 'react';
+
 import Lights from './Lights';
+import Power from './Power';
+
+import './global.css';
 
 export default class App extends PureComponent {
 
@@ -20,6 +24,8 @@ export default class App extends PureComponent {
     }
 
     errorHandler = error => {
+        if (error === null) return this.setState({error: null});
+
         console.warn(error)
         const msg = !error ?
             'An unknown error occured' :
@@ -37,6 +43,7 @@ export default class App extends PureComponent {
             {!error ? null : <div className='error'>{error}</div>}
 
             <Lights onError={this.errorHandler} />
+            <Power onError={this.errorHandler} />
         </div>
         );
     }

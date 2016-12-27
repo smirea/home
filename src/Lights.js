@@ -65,6 +65,7 @@ export default class Lights extends PureComponent {
 
     handleLightToggle = (id, power) => {
         this.updateLights([{id, power}]);
+        this.props.onError(null);
         axios.post('/light/' + power + '/id:' + id).catch(this.props.onError);
     };
 
@@ -76,6 +77,7 @@ export default class Lights extends PureComponent {
             axios.post('/light/scene/on/' + id) :
             axios.post('/light/states', nextLightsState.map(obj => ({selector: 'id:' + obj.id, power: obj.power})));
 
+        this.props.onError(null);
         this.updateLights(nextLightsState);
         promise.catch(this.props.onError);
     };
