@@ -1,7 +1,8 @@
 
-const {PureComponent, PropTypes} = React;
+import React, {PureComponent, PropTypes} from 'react';
+import Lights from './Lights';
 
-class App extends PureComponent {
+export default class App extends PureComponent {
 
     state = {
         error: null,

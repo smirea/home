@@ -32,21 +32,7 @@
 <body>
     <div id="app"></div>
 
-    <script type="text/javascript" src="/axios.js"></script>
-
-    <script type="text/javascript" src="/react.js"></script>
-    <script type="text/javascript" src="/react-dom.js"></script>
-    <script type="text/javascript" src="/Lights.js"></script>
-    <script type="text/javascript" src="/App.js"></script>
-
-    <script type="text/javascript">
-        const init = () => {
-            ReactDOM.render(React.createElement(App, null), $('#app'));
-        };
-
-        const $ = sel => document.querySelector(sel);
-
-        init();
-    </script>
+    <script type="text/javascript" src="/vendor.bundle.js"></script>
+    <script type="text/javascript" src="/js.bundle.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 
-const {PureComponent, PropTypes} = React;
+import axios from 'axios';
+import React, {PureComponent, PropTypes} from 'react';
 
 const ExtraPropTypes = {
     light: () =>
@@ -11,7 +12,7 @@ const ExtraPropTypes = {
         }),
 };
 
-class Lights extends PureComponent {
+export default class Lights extends PureComponent {
 
     static propTypes = {
         onError: PropTypes.func.isRequired,
