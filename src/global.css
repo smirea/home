@@ -12,6 +12,13 @@ html {
     flex-wrap: wrap;
 }
 
+.separator-vertical {
+    border-left: 2px solid #666;
+    align-self: stretch;
+    margin: 0 20px;
+    box-shadow: 2px 0 2px #fff;
+}
+
 .error {
     border: 1px solid crimson;
     background: red;

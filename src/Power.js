@@ -15,6 +15,7 @@ export default class Power extends PureComponent {
         power: {
             'heater-lamp': 'off',
             'heater-window': 'off',
+            'tv': 'off',
         },
     };
 
@@ -45,12 +46,24 @@ export default class Power extends PureComponent {
 
             <div {...rest} className='row'>
                 <PowerIcon
+                    name='TV'
+                    icon='television'
+                    power={this.state.power['tv']}
+                    onClick={val => this.toggle('tv', val)}
+                />
+
+                <div className='separator-vertical' />
+
+                <PowerIcon
                     name='Window Heater'
+                    icon='power-off'
                     onClick={val => this.toggle('heater-window', val)}
                     power={this.state.power['heater-window']}
                 />
+
                 <PowerIcon
                     name='Lamp Heater'
+                    icon='power-off'
                     power={this.state.power['heater-lamp']}
                     onClick={val => this.toggle('heater-lamp', val)}
                 />
@@ -60,12 +73,12 @@ export default class Power extends PureComponent {
     }
 }
 
-const PowerIcon = ({name, power, onClick, ...rest}) =>
+const PowerIcon = ({icon, name, power, onClick, ...rest}) =>
     <div
         {...rest}
         onClick={() => onClick(power === 'off' ? 'on' : 'off')}
         className={`button power-${power}`}
     >
-        <Icon size='5x' name='power-off' className='button-icon' />
+        <Icon size='5x' name={icon} className='button-icon' />
         <div className='button-name'>{name}</div>
     </div>
