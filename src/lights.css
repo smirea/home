@@ -7,6 +7,7 @@
     margin: 10px;
     cursor: pointer;
 }
+
 .light, .light * {
     transition: all .3s ease-in;
 }
@@ -17,6 +18,7 @@
     font-size: 1.2rem;
     line-height: 1.1;
 }
+
 .light-icon {
     flex: 0 0 auto;
     display: flex;
@@ -30,30 +32,28 @@
     font-size: 70px;
     box-shadow: 0px 0px 0px #fff;
 }
-.light-icon::before {
-    position: relative;
-    top: 5px;
-    content: '💡';
-}
-.not-connected .light-name {
+
+.not-connected {
     color: red;
 }
+
 .not-connected .light-icon {
     border-color: red;
     background: #f99;
 }
-.not-connected .light-icon::before {
-    filter: grayscale(100%);
-    opacity: 0.6;
+
+.power-off {
+    color: #666;
 }
 
 .power-off .light-icon {
     border-color: #666;
 }
 
-.power-off .light-icon::before {
-    filter: grayscale(100%);
+.power-on {
+    color: white;
 }
+
 .power-on .light-icon {
     border-color: #ccc;
     box-shadow: 0px 0px 30px #fff;

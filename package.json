@@ -8,7 +8,7 @@
     "start-pi": "node server-pi.js",
     "start-dev": "webpack-dev-server",
     "build": "webpack -p",
-    "postinstall": "if [ IS_HEROKU ]; then npm run build; fi"
+    "postinstall": "if [ $IS_HEROKU ]; then npm run build; fi"
   },
   "engines": {
     "node": "6.4.x"
@@ -32,6 +32,7 @@
     "express": "^4.14.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-fa": "^4.1.2",
     "strip-ansi": "^3.0.1",
     "webpack-dev-server": "^1.16.2"
   },
@@ -47,14 +48,17 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-runtime": "^6.20.0",
     "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",
     "nodemon": "^1.11.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.0-rc.2",
+    "webpack": "2.2.0-rc.2",
     "webpack-dev-server": "^1.16.2"
+  },
+  "bin": {
+    "home": "pm2-pi.js"
   }
 }

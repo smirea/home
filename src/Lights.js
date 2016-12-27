@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import React, {PureComponent, PropTypes} from 'react';
+import {Icon} from 'react-fa';
 
 import './lights.css';
 
@@ -177,14 +178,19 @@ class Light extends PureComponent {
     render () {
         const {data: {id, power, connected, label}, toggle, iconStyle, ...rest} = this.props;
 
+        const renderIcon = (cls, style) =>
+            <Icon size='5x' name='lightbulb-o' className={`light-icon ${cls || ''}`} style={style} />
+
         return (
         <div
             {...rest}
             className={`light ${connected ? `power-${power}` : 'not-connected'}`}
             onClick={this.handleToggle}
         >
-            <div className="light-icon" style={iconStyle}></div>
-            <div className="light-name">{label}</div>
+            <div style={{position: 'relative'}}>
+                {renderIcon(null, iconStyle)}
+            </div>
+            <div className='light-name'>{label}</div>
         </div>
         );
     }

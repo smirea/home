@@ -1,3 +1,4 @@
+
 const webpack = require('webpack');
 const path = require('path');
 
@@ -6,6 +7,8 @@ const isProd = nodeEnv === 'production';
 
 const sourcePath = path.join(__dirname, './src');
 const staticsPath = path.join(__dirname, './build');
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const plugins = [
     new webpack.optimize.CommonsChunkPlugin({
@@ -17,6 +20,7 @@ const plugins = [
         'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
     }),
     new webpack.NamedModulesPlugin(),
+    new ExtractTextPlugin('styles.bundle.css'),
 ];
 
 if (!isProd) {
@@ -53,11 +57,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                ],
+                // exclude: /node_modules/,
+                loader: ExtractTextPlugin.extract({
+                    fallbackLoader: 'style-loader',
+                    loader: 'css-loader',
+                }),
             },
             {
                 test: /\.(js|jsx)$/,
@@ -66,6 +70,23 @@ module.exports = {
                     'babel-loader',
                 ],
             },
+
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        query: {
+                            limit: 10000,
+                            mimetype: 'application/font-woff',
+                        },
+                    }
+                ],
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: ['file-loader'],
+            }
         ],
     },
 
