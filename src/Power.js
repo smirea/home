@@ -16,20 +16,22 @@ export default class Power extends PureComponent {
             'heater-lamp': 'off',
             'heater-window': 'off',
             'tv': 'off',
+            'dreamscreen': 'off',
         },
     };
 
-    toggle (prefix, power) {
+    toggle (update) {
         this.setState({
             power: {
                 ...this.state.power,
-                [prefix]: power,
+                ...update,
             },
-        })
+        });
+
         axios({
             method: 'post',
             url: '/cmd',
-            data: `${prefix}-${power}`,
+            data: Object.keys(update).map(key => `${key}-${update[key]}`).join(';'),
             headers: {
                 'Content-Type': 'text/plain',
             },
@@ -49,15 +51,22 @@ export default class Power extends PureComponent {
                     name='TV'
                     icon='television'
                     power={this.state.power['tv']}
-                    onClick={val => this.toggle('tv', val)}
+                    onClick={val => this.toggle({'tv': val, dreamscreen: val})}
                 />
 
-                <div className='separator-vertical' />
+                <PowerIcon
+                    name='Dream Screen'
+                    icon='magic'
+                    power={this.state.power['dreamscreen']}
+                    onClick={val => this.toggle({'dreamscreen': val})}
+                />
+
+                {/*<div className='separator-vertical' />*/}
 
                 <PowerIcon
                     name='Window Heater'
                     icon='power-off'
-                    onClick={val => this.toggle('heater-window', val)}
+                    onClick={val => this.toggle({'heater-window': val})}
                     power={this.state.power['heater-window']}
                 />
 
@@ -65,7 +74,7 @@ export default class Power extends PureComponent {
                     name='Lamp Heater'
                     icon='power-off'
                     power={this.state.power['heater-lamp']}
-                    onClick={val => this.toggle('heater-lamp', val)}
+                    onClick={val => this.toggle({'heater-lamp': val})}
                 />
             </div>
         </div>
